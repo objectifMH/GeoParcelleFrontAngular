@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'GeoParcelle';
+
+public utilisateurEdit:any = "";
+
+  public routeCourante:any;
+
+  constructor() { }
+
+  ngOnInit() {
+
+  }
+
+
 }
