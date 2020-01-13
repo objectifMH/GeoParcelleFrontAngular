@@ -1,0 +1,107 @@
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h2>Utilisateurs</h2>
+                </div>
+                <div class="col-sm-7">
+                    <a href="#" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-hover" *ngIf="utilisateurs">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>eMail</th>
+                    <th>Date Created</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let  utilisateur of utilisateurs._embedded.utilisateurs ; let index = index;">
+                    <td>{{index}}</td>
+                    <td><a href="#"> {{utilisateur.nom}} {{utilisateur.prenom}}</a></td>
+                    <td>{{utilisateur.email}}</td>
+                    <td>{{utilisateur.dateCreation | date:'shortDate'}}</td>
+                    <td>Admin</td>
+                    <td><span  [ngClass]="utilisateur.connecte == true ? 'status text-success' :  'status text-danger'">&bull;</span> {{utilisateur.connecte == true ? "Connecté" : "Déconnecté"}}</td>
+                    <td>
+                        <a  class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons edit_icon clickMain" (click)="onEditUtilisateur(utilisateur)" data-toggle="modal" data-target="#myModal">&#xE8B8;</i></a>
+                        <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons edit_icon clickMain" (click)="onDelUtilisateur(utilisateur)">&#xE5C9;</i></a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <div class="clearfix">
+
+
+            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+            <ul class="pagination">
+                <li class="page-item disabled"><a href="#">Previous</a></li>
+                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                <li class="page-item"><a href="#" class="page-link">Next</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Edition d'un utilisateur :</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form #f="ngForm" (ngSubmit)="onMajUtilisateur(f.value)">
+                    <div class="form-group">
+                        <label class="control-label">Nom</label>
+                        <input class="form-control" type="text" name="nomUtilisateur" [(ngModel)]="utilisateurEdit.nom" >
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Prenom</label>
+                        <input class="form-control" type="text" name="prenomUtilisateur" [(ngModel)]="utilisateurEdit.prenom">
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Email</label>
+                      <input class="form-control" type="text" name="prenomEmail" [(ngModel)]="utilisateurEdit.email">
+                    </div>
+                    <button type="submit" class="btn btn-success" >Envoyer</button>
+                </form>
+
+            </div>
+
+            <!-- Modal footer
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+            -->
+
+        </div>
+    </div>
+</div>
