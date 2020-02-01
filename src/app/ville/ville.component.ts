@@ -8,45 +8,51 @@ import { GeoService } from '../service/geo.service';
 })
 export class VilleComponent implements OnInit {
 
-  public villes:any
-  public villeCourante:any = "test"
-  public parcelles:any
-  public tabParcelles:any
+  public villes: any
+  public villeCourante: any = "test"
+  public parcelles: any
+  public tabParcelles: any
 
-  constructor( private geoService: GeoService ) { }
+  constructor(private geoService: GeoService) { }
 
   ngOnInit() {
-  console.log("debut init villes");
-  this.onGetVilles();
+    console.log("debut init villes");
+    this.onGetVilles();
   }
 
   onGetVilles() {
-  this.geoService.getVilles()
-    .subscribe(
+    this.geoService.getVilles()
+      .subscribe(
         data => {
-            this.villes = data ;
-            console.log(data);
+          this.villes = data;
+          if (data["_embedded"].villes[0]) {
+            this.villeCourante = data["_embedded"].villes[0];
+            this.onParcellesByVille(this.villeCourante);
+          }
 
-        } ,
+          console.log(data);
+
+        },
         err => {
-            console.log(err)
+          console.log(err)
         }
-  )}
+      )
+  }
 
-  onParcellesByVille(ville){
+  onParcellesByVille(ville) {
     this.villeCourante = ville;
     this.parcelles = null;
     console.log(ville);
-    this.geoService.getParcellesByVilles(ville._links.parcelles.href).subscribe(
-        data => {
-            this.parcelles = data ;
-            this.tabParcelles = (<any>data)._embedded.parcelles;
+    this.geoService.getParcellesByVilles(this.villeCourante._links.parcelles.href).subscribe(
+      data => {
+        this.parcelles = data;
+        this.tabParcelles = (<any>data)._embedded.parcelles;
 
-        } ,
-        err => {
-            console.log("c'est moir l'erreur " + err)
-        }
-)
+      },
+      err => {
+        console.log("c'est moir l'erreur " + err)
+      }
+    )
 
   }
 
