@@ -49,10 +49,6 @@ export class UtilisateurComponent implements OnInit {
 
   onMajUtilisateur(formUtilisateur){
     //console.log(formUtilisateur);
-<<<<<<< HEAD
-
-=======
->>>>>>> f5a4f9c0aabf2aa1d4097a6e9a2982992ff0c74c
     console.log(this.utilisateurEdit);
     let util = this.utilisateurEdit ;
     this.geoService.majUtilisateur(util).subscribe(
