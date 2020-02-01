@@ -1,0 +1,37 @@
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <h3>Liste des Villes</h3>
+      <ul *ngIf="villes" class="list-group">
+        <li *ngFor="let ville of villes._embedded.villes" class="list-group-item "  [ngClass]="villeCourante==ville ?'active':'' " (click)="onParcellesByVille(ville)">{{ville.nom}}</li>
+      </ul>
+
+
+    </div>
+    <div class="col-md-9">
+      <h3>Parcelles<small class="float-right"> nbrs : {{tabParcelles == undefined ? 0 : tabParcelles.length}}</small> </h3>
+      <ul  *ngIf="parcelles" class="list-group clearfix">
+        <li *ngFor="let parcelle of parcelles._embedded.parcelles" class="list-group-item "  >
+          <div class=" p-3 border bg-light bg-info">
+            <h4>{{parcelle.nom}} <small class="float-right"> {{villeCourante.nom}} </small></h4>
+            <h6>{{parcelle.description}}</h6>
+            <div>catégorie</div>
+            plu
+
+            <div class="float-right">{{parcelle.surface}} m2 </div>
+            <div class="clearfix"></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
